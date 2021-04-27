@@ -48,7 +48,7 @@
             const cityName = city.value
 
             // console.log(cityName)
-            fetch('https://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&appid=e496ff74aa811eca3328efc983905ee9')
+            fetch('https://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&&units=metric&appid=e496ff74aa811eca3328efc983905ee9')
                 .then(res => res.json())
                 .then(data => {
                     console.log(data)
@@ -56,7 +56,7 @@
                         alert("city not found")
                     else {
                         locationTag.innerText = data.name
-                        temperature.innerText = (data.main.temp - 273).toFixed(2)
+                        temperature.innerText = (data.main.temp)
                         weatherDescription.innerText = data.weather[0].description
 
                         const iconcode = data.weather[0].icon

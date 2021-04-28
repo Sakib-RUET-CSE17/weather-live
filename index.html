@@ -32,7 +32,9 @@
             <img id="weather-icon" src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
             <h1 id="location-tag">Dhaka</h1>
             <h3><span id="temperature">38.06</span>&deg;C</h3>
-            <h1 id="weather-description" class="lead">Clouds</h1>
+            <h1 class="lead">Feels like <span id="feels-like">41</span>&deg;C. <span id="weather-description">Clouds</span></h1>
+            <p>Humidity: <span id="humidity">44</span>%</p>
+            <p>Min: <span id="temp_min">35</span>&deg;C. Max: <span id="temp_max">35</span>&deg;C</p>
         </div>
     </div>
 
@@ -42,27 +44,34 @@
         const temperature = document.getElementById('temperature')
         const weatherDescription = document.getElementById('weather-description')
         const weatherIcon = document.getElementById('weather-icon')
+        const humidity = document.getElementById('humidity')
+        const feelsLike = document.getElementById('feels-like')
+        const tempMin = document.getElementById('temp_min')
+        const tempMax = document.getElementById('temp_max')
+
 
         function handleSearchBtn() {
-            // console.log('search clicked')
             const cityName = city.value
-
-            // console.log(cityName)
             fetch('https://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&&units=metric&appid=e496ff74aa811eca3328efc983905ee9')
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data)
+                    // console.log(data)
                     if (data.message === 'city not found')
                         alert("city not found")
                     else {
-                        locationTag.innerText = data.name
+                        locationTag.innerText = data.name + ', ' + data.sys.country
                         temperature.innerText = (data.main.temp)
-                        weatherDescription.innerText = data.weather[0].description
+                        weatherDescription.innerText = data.weather[0].main
 
                         const iconcode = data.weather[0].icon
 
                         const iconurl = "https://openweathermap.org/img/wn/" + iconcode + "@2x.png";
                         weatherIcon.src = iconurl
+                        humidity.innerText = data.main.humidity
+                        feelsLike.innerText = data.main.feels_like
+                        tempMin.innerText = data.main.temp_min
+                        tempMax.innerText = data.main.temp_max
+                            // console.log()
                     }
 
                 })
